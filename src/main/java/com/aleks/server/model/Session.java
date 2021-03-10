@@ -4,36 +4,36 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-public class Player
+public class Session
 {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "id", nullable = false)
   private int id;
 
-  @Column(name = "user_name", unique = true, nullable = false)
-  private String userName;
+  @ManyToOne
+  @JoinColumn(name = "game_id", nullable = false)
+  private Game game;
 
-  @Column(name = "email", unique = true, nullable = false)
-  private String email;
+  @ManyToOne
+  @JoinColumn(name = "player_id", nullable = true)
+  private Player player;
 
-  @Column(name = "password", nullable = false)
-  private String password;
-
-  @Column(name = "tokens", nullable = false)
-  private int tokens;
+  @Column(name = "created", nullable = false)
+  private LocalDateTime created;
 }
