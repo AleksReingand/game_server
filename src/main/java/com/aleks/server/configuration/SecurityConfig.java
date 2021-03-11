@@ -15,19 +15,20 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter
 {
-
   @Autowired
   private PlayerRepo playerRepo;
 
   @Autowired
-  public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+  public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception
+  {
     auth
-            .userDetailsService(new UserDetailsServiceImpl(playerRepo))
-            .passwordEncoder(new BCryptPasswordEncoder());
+        .userDetailsService(new UserDetailsServiceImpl(playerRepo))
+        .passwordEncoder(new BCryptPasswordEncoder());
   }
 
   @Override
-  protected void configure(HttpSecurity http) throws Exception {
+  protected void configure(HttpSecurity http) throws Exception
+  {
     http
         .authorizeRequests()
         .anyRequest().authenticated()
