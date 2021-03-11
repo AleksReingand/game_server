@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum DescType
+public enum DeckType
 {
     DECK_36(36), DECK_52(52);
 

@@ -1,6 +1,7 @@
 package com.aleks.server.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,6 +20,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Session
 {
   @Id
@@ -33,6 +35,10 @@ public class Session
   @ManyToOne
   @JoinColumn(name = "player_id", nullable = true)
   private Player player;
+
+  @ManyToOne
+  @JoinColumn(name = "card_id", nullable = true)
+  private Card card;
 
   @Column(name = "created", nullable = false)
   private LocalDateTime created;

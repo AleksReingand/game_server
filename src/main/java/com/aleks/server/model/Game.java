@@ -1,8 +1,10 @@
 package com.aleks.server.model;
 
-import com.aleks.server.enums.DescType;
+import com.aleks.server.enums.DeckType;
 import com.aleks.server.enums.GameStatus;
+import com.aleks.server.enums.GameType;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,13 +19,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Game
 {
   @Id
@@ -32,11 +34,18 @@ public class Game
   private int id;
 
   @ManyToOne
-  //@JoinColumn(name = "player_id", nullable = true)
-  private List<Player> players;
+  @JoinColumn(name = "first_player_id", nullable = false)
+  private Player firstPlayer;
+
+  @ManyToOne
+  @JoinColumn(name = "second_player_id", nullable = true)
+  private Player secondPlayer;
 
   @Enumerated(EnumType.STRING)
-  DescType deckType;
+  DeckType deckType;
+
+  @Enumerated(EnumType.STRING)
+  private GameType gameType;
 
   @Enumerated(EnumType.STRING)
   GameStatus gameStatus;

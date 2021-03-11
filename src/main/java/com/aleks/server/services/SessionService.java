@@ -1,8 +1,94 @@
 package com.aleks.server.services;
 
+import com.aleks.server.DTO.SessionDto;
+import com.aleks.server.enums.GameStatus;
+import com.aleks.server.model.Game;
+import com.aleks.server.model.Player;
+import com.aleks.server.model.Session;
+import com.aleks.server.repo.SessionRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class SessionService
 {
+  private final SessionRepo sessionRepo;
+  
+  @Autowired
+  public SessionService(SessionRepo sessionRepo)
+  {
+    this.sessionRepo = sessionRepo;
+  }
+
+  @Transactional
+  public Session createSession(Game game, Player player, SessionDto sessionDto)
+  {
+    Session session = new Session();
+    //TODO fill session
+
+    sessionRepo.save(session);
+
+    return session;
+  }
+
+  @Transactional
+  public Session autoCreateSession(Game game)
+  {
+    Session session = new Session();
+    //TODO fill session
+
+    sessionRepo.save(session);
+
+    return session;
+  }
+
+  public List<SessionDto> getSessionsInGame(Game game)
+  {
+
+    List<Session> sessionsInGame = sessionRepo.findByGame(game);
+    List<SessionDto> sessions = new ArrayList<>();
+
+    for(Session session : sessionsInGame)
+    {
+      SessionDto sessionDto = new SessionDto();
+      //TODO fill sessionDto
+
+      sessions.add(sessionDto);
+    }
+
+    return sessions;
+  }
+
+  public List<String> getTakenSessionInGame(Game game)
+  {
+    return sessionRepo.findByGame(game)
+                      .stream()
+                      .map(session -> session.getCard().getRank().name() + " " + session.getCard().getSuit().name())
+                      .collect(Collectors.toList());
+  }
+
+  public List<String> getPlayerSessionInGame(Game game, Player player)
+  {
+    return sessionRepo.findByGameAndPlayer(game, player)
+                      .stream()
+                      .map(session -> session.getCard().getRank().name() + " " + session.getCard().getSuit().name())
+                      .collect(Collectors.toList());
+  }
+
+  public int getTheNumberOfPlayerSessionsInGame(Game game, Player player)
+  {
+    return sessionRepo.countByGameAndPlayer(game, player);
+  }
+
+  public GameStatus checkCurrentGameStatus(Game game)
+  {
+    //TODO write logic
+    return null;
+  }
 }
+

@@ -1,10 +1,10 @@
 package com.aleks.server.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +17,7 @@ import javax.persistence.Id;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@Builder
 public class Player
 {
   @Id
@@ -34,6 +34,6 @@ public class Player
   @Column(name = "password", nullable = false)
   private String password;
 
-  @Column(name = "tokens", nullable = false)
-  private int tokens;
+  @Column(name = "token", nullable = false)
+  private int token;
 }
