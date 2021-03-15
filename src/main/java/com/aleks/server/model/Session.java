@@ -42,4 +42,7 @@ public class Session
 
   @Column(name = "created", nullable = false)
   private LocalDateTime created;
+
+  @Column(name = "updated", nullable = false)
+  private LocalDateTime updated;
 }

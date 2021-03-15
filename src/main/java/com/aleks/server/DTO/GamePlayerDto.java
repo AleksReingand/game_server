@@ -1,7 +1,7 @@
 package com.aleks.server.DTO;
 
-import com.aleks.server.enums.DeckType;
-import com.aleks.server.enums.GameType;
+import com.aleks.server.enums.MoveType;
+import com.aleks.server.model.Card;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,10 +13,13 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class GameDto
+public class GamePlayerDto
 {
-  private int id;
-  private GameType gameType;
-  private DeckType deckType;
-  private List<GamePlayerDto> players;
+  private int playerId;
+
+  private MoveType moveType;
+
+  private List<Card> card;
+
+  private int token;
 }

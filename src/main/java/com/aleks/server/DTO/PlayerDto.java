@@ -17,6 +17,4 @@ public class PlayerDto
 
   @NotNull
   private String email;
-
-  private int tokens;
 }

@@ -1,13 +1,13 @@
 package com.aleks.server.model;
 
-import com.aleks.server.enums.DeckType;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,16 +15,19 @@ import javax.persistence.Id;
 @Entity
 @Getter
 @Setter
-public class Deck
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Transaction
 {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "id", nullable = false)
   private int id;
 
-  @Enumerated(EnumType.STRING)
-  private DeckType deckType;
+  @Column(name = "token_amount", nullable = false)
+  private int token_amount;
 
-  @Column(name = "game_id", nullable = false)
-  private int gameId;
+  @Column(name = "player_id", nullable = false)
+  private int player_id;
 }

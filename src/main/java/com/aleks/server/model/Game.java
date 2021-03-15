@@ -1,6 +1,5 @@
 package com.aleks.server.model;
 
-import com.aleks.server.enums.DeckType;
 import com.aleks.server.enums.GameStatus;
 import com.aleks.server.enums.GameType;
 import lombok.AllArgsConstructor;
@@ -9,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -17,8 +17,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import java.time.LocalDateTime;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -26,30 +27,35 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Game
+public class Game extends AbstractEntity
 {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "id", nullable = false)
   private int id;
 
-  @ManyToOne
-  @JoinColumn(name = "first_player_id", nullable = false)
-  private Player firstPlayer;
+  @ManyToMany(cascade = {CascadeType.ALL})
+  @JoinTable(
+          name = "game_player",
+          joinColumns = {@JoinColumn(name = "game_id")},
+          inverseJoinColumns = {@JoinColumn(name = "player_id")}
+  )
+  private Set<Player> players;
 
-  @ManyToOne
-  @JoinColumn(name = "second_player_id", nullable = true)
-  private Player secondPlayer;
-
-  @Enumerated(EnumType.STRING)
-  DeckType deckType;
+  @Column(name = "deck_id", nullable = false)
+  private int deckId;
 
   @Enumerated(EnumType.STRING)
   private GameType gameType;
 
   @Enumerated(EnumType.STRING)
-  GameStatus gameStatus;
+  private GameStatus gameStatus;
 
-  @Column(name = "created", nullable = false)
-  private LocalDateTime created;
+  @ManyToMany(cascade = {CascadeType.ALL})
+  @JoinTable(
+          name = "game_card",
+          joinColumns = {@JoinColumn(name = "game_id")},
+          inverseJoinColumns = {@JoinColumn(name = "card_id")}
+  )
+  private Set<Card> cards;
 }

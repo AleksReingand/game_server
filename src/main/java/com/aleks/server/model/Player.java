@@ -6,11 +6,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -34,6 +39,11 @@ public class Player
   @Column(name = "password", nullable = false)
   private String password;
 
-  @Column(name = "token", nullable = false)
-  private int token;
+  @ManyToMany(cascade = {CascadeType.ALL})
+  @JoinTable(
+          name = "game_card",
+          joinColumns = {@JoinColumn(name = "game_id")},
+          inverseJoinColumns = {@JoinColumn(name = "card_id")}
+  )
+  private Set<Card> cards;
 }

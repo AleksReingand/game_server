@@ -1,7 +1,7 @@
 package com.aleks.server.security;
 
 import com.aleks.server.model.Player;
-import com.aleks.server.repo.PlayerRepo;
+import com.aleks.server.repository.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,12 +14,12 @@ import static org.apache.logging.log4j.util.Strings.isEmpty;
 @Component
 public class UserDetailsServiceImpl implements UserDetailsService
 {
-  private final PlayerRepo playerRepo;
+  private final PlayerRepository playerRepository;
 
   @Autowired
-  public UserDetailsServiceImpl(PlayerRepo playerRepo)
+  public UserDetailsServiceImpl(PlayerRepository playerRepository)
   {
-    this.playerRepo = playerRepo;
+    this.playerRepository = playerRepository;
   }
 
   @Override
@@ -31,7 +31,7 @@ public class UserDetailsServiceImpl implements UserDetailsService
       throw new UsernameNotFoundException("Username cannot be empty");
     }
 
-    Player player = playerRepo.findOneByUserName(username);
+    Player player = playerRepository.findOneByUserName(username);
 
     if(player == null)
     {

@@ -12,7 +12,7 @@
     <artifactId>demo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>game_server</name>
-    <description>Geme Server project for Spring Boot</description>
+    <description>Game Server project for Spring Boot</description>
     <properties>
         <java.version>11</java.version>
     </properties>

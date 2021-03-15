@@ -45,7 +45,7 @@ public class SessionController
 
     Session session = sessionService.createSession(gameService.getGame(gameId), playerService.getLoggedUser(), sessionDto);
     Game game = gameService.getGame(gameId);
-    gameService.updateGameStatus(gameService.getGame(gameId), sessionService.checkCurrentGameStatus(game));
+    //gameService.updateGameStatus(gameService.getGame(gameId), sessionService.checkCurrentGameStatus(game));
 
     return session;
   }
@@ -60,13 +60,13 @@ public class SessionController
     Session move = sessionService.autoCreateSession(gameService.getGame(gameId));
 
     Game game = gameService.getGame(gameId);
-    gameService.updateGameStatus(gameService.getGame(gameId), sessionService.checkCurrentGameStatus(game));
+    //gameService.updateGameStatus(gameService.getGame(gameId), sessionService.checkCurrentGameStatus(game));
 
     return move;
   }
 
   @GetMapping("/list")
-  public List<SessionDto> getMovesInGame()
+  public List<SessionDto> getSessionsInGame()
   {
     Integer gameId = (Integer) httpSession.getAttribute("gameId");
 

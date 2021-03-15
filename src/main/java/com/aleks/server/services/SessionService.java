@@ -5,7 +5,7 @@ import com.aleks.server.enums.GameStatus;
 import com.aleks.server.model.Game;
 import com.aleks.server.model.Player;
 import com.aleks.server.model.Session;
-import com.aleks.server.repo.SessionRepo;
+import com.aleks.server.repository.SessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,21 +17,24 @@ import java.util.stream.Collectors;
 @Service
 public class SessionService
 {
-  private final SessionRepo sessionRepo;
+  private final SessionRepository sessionRepository;
   
   @Autowired
-  public SessionService(SessionRepo sessionRepo)
+  public SessionService(SessionRepository sessionRepository)
   {
-    this.sessionRepo = sessionRepo;
+    this.sessionRepository = sessionRepository;
   }
 
   @Transactional
   public Session createSession(Game game, Player player, SessionDto sessionDto)
   {
-    Session session = new Session();
+    Session session = Session.builder()
+            .game(game)
+            .player(player)
+            .build();
     //TODO fill session
 
-    sessionRepo.save(session);
+    sessionRepository.save(session);
 
     return session;
   }
@@ -42,7 +45,7 @@ public class SessionService
     Session session = new Session();
     //TODO fill session
 
-    sessionRepo.save(session);
+    sessionRepository.save(session);
 
     return session;
   }
@@ -50,7 +53,7 @@ public class SessionService
   public List<SessionDto> getSessionsInGame(Game game)
   {
 
-    List<Session> sessionsInGame = sessionRepo.findByGame(game);
+    List<Session> sessionsInGame = sessionRepository.findByGame(game);
     List<SessionDto> sessions = new ArrayList<>();
 
     for(Session session : sessionsInGame)
@@ -66,7 +69,7 @@ public class SessionService
 
   public List<String> getTakenSessionInGame(Game game)
   {
-    return sessionRepo.findByGame(game)
+    return sessionRepository.findByGame(game)
                       .stream()
                       .map(session -> session.getCard().getRank().name() + " " + session.getCard().getSuit().name())
                       .collect(Collectors.toList());
@@ -74,7 +77,7 @@ public class SessionService
 
   public List<String> getPlayerSessionInGame(Game game, Player player)
   {
-    return sessionRepo.findByGameAndPlayer(game, player)
+    return sessionRepository.findByGameAndPlayer(game, player)
                       .stream()
                       .map(session -> session.getCard().getRank().name() + " " + session.getCard().getSuit().name())
                       .collect(Collectors.toList());
@@ -82,7 +85,7 @@ public class SessionService
 
   public int getTheNumberOfPlayerSessionsInGame(Game game, Player player)
   {
-    return sessionRepo.countByGameAndPlayer(game, player);
+    return sessionRepository.countByGameAndPlayer(game, player);
   }
 
   public GameStatus checkCurrentGameStatus(Game game)

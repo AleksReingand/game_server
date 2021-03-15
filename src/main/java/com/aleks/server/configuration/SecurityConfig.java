@@ -1,7 +1,7 @@
 package com.aleks.server.configuration;
 
 
-import com.aleks.server.repo.PlayerRepo;
+import com.aleks.server.repository.PlayerRepository;
 import com.aleks.server.security.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -16,13 +16,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter
 {
   @Autowired
-  private PlayerRepo playerRepo;
+  private PlayerRepository playerRepository;
 
   @Autowired
   public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception
   {
     auth
-        .userDetailsService(new UserDetailsServiceImpl(playerRepo))
+        .userDetailsService(new UserDetailsServiceImpl(playerRepository))
         .passwordEncoder(new BCryptPasswordEncoder());
   }
 
