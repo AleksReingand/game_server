@@ -11,7 +11,8 @@ player <br>
 session <br>
 transaction <br>
 
-<b>The Spring Boot project<b><br>
+<b>The Spring Boot project</b>
+<br>
 The configuration package contains the HTTP Security configuration.<br>
 The controller package contains classes that handle HTTP requests.<br>
 The model package contains the entity classes.<br>
